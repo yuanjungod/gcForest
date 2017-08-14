@@ -15,6 +15,7 @@ from ..utils.config_utils import get_config_value
 
 LOGGER = get_logger('gcforest.layers.base_layer')
 
+
 class BaseLayer(object):
     def __init__(self, layer_config, data_cache):
         self.layer_config = layer_config

@@ -12,6 +12,7 @@ import numpy as np
 from .ds_base import ds_base
 from keras.datasets import cifar10
 
+
 cls_names = ('airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 """
@@ -19,6 +20,8 @@ X_train.shape: (50000, 3, 32, 32)
 X_test.shape: (10000, 3, 32, 32)
 y: 10 labels
 """
+
+
 class CIFAR10(ds_base):
     def __init__(self, **kwargs):
         super(CIFAR10, self).__init__(**kwargs)

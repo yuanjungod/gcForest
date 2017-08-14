@@ -16,6 +16,7 @@ from .utils.log_utils import get_logger
 
 LOGGER = get_logger("gcforest.gcnet")
 
+
 class FGNet(object):
     """
     GCForest : FineGrained Components
@@ -37,7 +38,6 @@ class FGNet(object):
             layer.model_disk_base = model_disk_base
             self.layers.append(layer)
             self.name2layer[layer.name] = layer
-
 
     def fit_transform(self, X_train, y_train, X_test, y_test, train_config):
         """
@@ -71,7 +71,7 @@ class FGNet(object):
                 return
             save_path = osp.join(self.data_cache.cache_dir, phase, "outputs.pkl")
         import pickle
-        info  = ""
+        info = ""
         data_names = [name for name in self.outputs]
         if save_y:
             data_names.append("y")

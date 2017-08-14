@@ -28,12 +28,14 @@ def forest_predict_batch_size(clf, X):
         return 0
     return batch_size
 
+
 class SKlearnBaseClassifier(BaseClassifierWrapper):
     def _load_model_from_disk(self, cache_path):
         return joblib.load(cache_path)
 
     def _save_model_to_disk(self, clf, cache_path):
         joblib.dump(clf, cache_path)
+
 
 class GCExtraTreesClassifier(SKlearnBaseClassifier):
     def __init__(self, name, kwargs):
@@ -42,6 +44,7 @@ class GCExtraTreesClassifier(SKlearnBaseClassifier):
     
     def _default_predict_batch_size(self, clf, X):
         return forest_predict_batch_size(clf, X)
+
 
 class GCRandomForestClassifier(SKlearnBaseClassifier):
     def __init__(self, name, kwargs):

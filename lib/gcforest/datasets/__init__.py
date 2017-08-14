@@ -18,6 +18,7 @@ from .uci_letter import UCILetter
 from .uci_semg import UCISEMG
 from .uci_yeast import UCIYeast
 
+
 def get_ds_class(type_name):
     if type_name == 'cifar10':
         return CIFAR10
@@ -42,6 +43,7 @@ def get_ds_class(type_name):
     if type_name == 'uci_yeast':
         return UCIYeast
     return None
+
 
 def get_dataset(ds_config):
     type_name = ds_config['type']

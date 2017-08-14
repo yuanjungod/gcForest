@@ -13,12 +13,14 @@ from .utils.log_utils import get_logger
 
 LOGGER = get_logger('gcforest.exp_utils')
 
+
 def concat_datas(datas):
     if type(datas) != list:
         return datas
     for i, data in enumerate(datas):
         datas[i] = data.reshape((data.shape[0], -1))
     return np.concatenate(datas, axis=1)
+
 
 def data_norm(X_train, X_test):
     X_mean = np.mean(X_train, axis=0)
@@ -29,8 +31,10 @@ def data_norm(X_train, X_test):
     X_test /= X_std
     return X_mean, X_std
 
+
 def append_origin(X, X_origin):
     return np.hstack(( X.reshape((X.shape[0]), -1), X_origin.reshape((X_origin.shape[0], -1)) ))
+
 
 def prec_ets(n_trees, X_train, y_train, X_test, y_test, random_state=None):
     """
@@ -50,6 +54,7 @@ def prec_ets(n_trees, X_train, y_train, X_test, y_test, random_state=None):
     LOGGER.info('prec_ets{}={:.6f}%'.format(n_trees, prec*100.0))
     return clf, y_pred
 
+
 def prec_rf(n_trees, X_train, y_train, X_test, y_test):
     """
     ExtraTrees
@@ -68,6 +73,7 @@ def prec_rf(n_trees, X_train, y_train, X_test, y_test):
     LOGGER.info('prec_rf{}={:.6f}%'.format(n_trees, prec*100.0))
     return clf, y_pred
 
+
 def xgb_eval_accuracy(y_pred_proba, y_true):
     """
     y_true (DMatrix)
@@ -76,6 +82,7 @@ def xgb_eval_accuracy(y_pred_proba, y_true):
     y_true = y_true.get_label()
     acc = float(np.sum(y_pred == y_true)) / len(y_pred)
     return 'accuracy', -acc
+
 
 def prec_xgb(n_trees, max_depth, X_train, y_train, X_test, y_test, learning_rate=0.1):
     """
@@ -95,6 +102,7 @@ def prec_xgb(n_trees, max_depth, X_train, y_train, X_test, y_test, learning_rate
     LOGGER.info('prec_xgb_{}={:.6f}%'.format(n_trees, prec*100.0))
     return clf, y_pred
 
+
 def prec_log(X_train, y_train, X_test, y_test):
     from sklearn.linear_model import LogisticRegression
     if not issparse(X_train):
@@ -112,6 +120,7 @@ def prec_log(X_train, y_train, X_test, y_test):
     LOGGER.info('prec_log={:.6f}%'.format(prec*100.0))
     return clf, y_pred
 
+
 def plot_forest_all_proba(y_proba_all, y_gt):
     from matplotlib import pylab
     N = len(y_gt)
@@ -124,6 +133,7 @@ def plot_forest_all_proba(y_proba_all, y_gt):
     pylab.matshow(mat, fignum=False, cmap='Blues', vmin=0, vmax=1.0)
     pylab.grid(False)
     pylab.show()
+
 
 def plot_confusion_matrix(cm, label_list, title='Confusion matrix', cmap=None):
     from matplotlib import pylab

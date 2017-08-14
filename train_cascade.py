@@ -12,10 +12,10 @@ import logging
 import numpy as np
 import json
 
-sys.path.insert(0, 'lib')
-from gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
-from gcforest.utils.config_utils import load_json
-#update_default_level(logging.DEBUG)
+from lib.gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
+from lib.gcforest.utils.config_utils import load_json
+# update_default_level(logging.DEBUG)
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -29,8 +29,8 @@ if __name__ == '__main__':
     config = load_json(args.model)
     if args.log_dir is not None:
         update_default_logging_dir(args.log_dir)
-    from gcforest.cascade.cascade_classifier import CascadeClassifier
-    from gcforest.datasets import get_dataset
+    from lib.gcforest.cascade.cascade_classifier import CascadeClassifier
+    from lib.gcforest.datasets import get_dataset
     LOGGER = get_logger("tools.train_cascade")
     LOGGER.info("tools.train_cascade")
     LOGGER.info("\n" + json.dumps(config, sort_keys=True, indent=4, separators=(',', ':')))

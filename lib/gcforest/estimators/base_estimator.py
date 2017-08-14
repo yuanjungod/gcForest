@@ -15,10 +15,12 @@ from ..utils.cache_utils import name2path
 
 LOGGER = get_logger("gcforest.estimators.base_estimator")
 
+
 def check_dir(path):
     d = osp.abspath(osp.join(path, osp.pardir))
     if not osp.exists(d):
         os.makedirs(d)
+
 
 class BaseClassifierWrapper(object):
     def __init__(self, name, est_class, est_args):

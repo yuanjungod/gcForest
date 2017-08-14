@@ -12,9 +12,8 @@ import logging
 import numpy as np
 import json
 
-sys.path.insert(0, 'lib')
-from gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
-from gcforest.utils.config_utils import load_json
+from lib.gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
+from lib.gcforest.utils.config_utils import load_json
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -30,9 +29,9 @@ if __name__ == '__main__':
     update_default_level(logging.DEBUG)
     if args.log_dir is not None:
         update_default_logging_dir(args.log_dir)
-    from gcforest.fgnet import FGNet, FGTrainConfig
-    from gcforest.exp_utils import prec_ets, prec_rf, prec_log, prec_xgb, concat_datas
-    from gcforest.datasets import get_dataset
+    from lib.gcforest.fgnet import FGNet, FGTrainConfig
+    from lib.gcforest.exp_utils import prec_ets, prec_rf, prec_log, prec_xgb, concat_datas
+    from lib.gcforest.datasets import get_dataset
     LOGGER = get_logger("tools.train_fg")
     LOGGER.info("tools.train_fg")
     LOGGER.info("\n" + json.dumps(config, sort_keys=True, indent=4, separators=(',', ':')))
