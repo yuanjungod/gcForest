@@ -12,6 +12,7 @@ from ..utils.log_utils import get_logger
 
 LOGGER = get_logger('gcforest.estimators.est_utils')
 
+
 def xgb_train(train_config, X_train, y_train, X_test, y_test):
     import xgboost as xgb
     LOGGER.info("X_train.shape={}, y_train.shape={}, X_test.shape={}, y_test.shape={}".format(

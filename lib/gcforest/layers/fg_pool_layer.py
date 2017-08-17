@@ -16,6 +16,7 @@ from ..utils.log_utils import get_logger
 
 LOGGER = get_logger('gcforest.layers.fg_pool_layer')
 
+
 class FGPoolLayer(BaseLayer):
     def __init__(self, layer_config, data_cache):
         """
@@ -24,7 +25,7 @@ class FGPoolLayer(BaseLayer):
         super(FGPoolLayer, self).__init__(layer_config, data_cache)
         self.win_x = self.get_value("win_x", None, int, required=True)
         self.win_y = self.get_value("win_y", None, int, required=True)
-        self.pool_method = self.get_value("pool_method", "avg", basestring)
+        self.pool_method = self.get_value("pool_method", "avg", str)
 
     def fit_transform(self, train_config):
         LOGGER.info("[data][{}] bottoms={}, tops={}".format(self.name, self.bottom_names, self.top_names))
@@ -41,14 +42,14 @@ class FGPoolLayer(BaseLayer):
                 LOGGER.info('[data][{},{}] bottoms[{}].shape={}'.format(self.name, phase, ti, X.shape))
                 n, c, h, w = X.shape
                 win_x, win_y = self.win_x, self.win_y
-                #assert h % win_y == 0
-                #assert w % win_x == 0
-                #nh = int(h / win_y)
-                #nw = int(w / win_x)
-                nh = (h - 1) / win_y + 1
-                nw = (w - 1) / win_x + 1
-                X_pool = np.empty(( n, c, nh, nw), dtype=np.float32)
-                #for k in trange(c, desc='loop channel'):
+                # assert h % win_y == 0
+                # assert w % win_x == 0
+                # nh = int(h / win_y)
+                # nw = int(w / win_x)
+                nh = (h - 1) // win_y + 1
+                nw = (w - 1) // win_x + 1
+                X_pool = np.empty((n, c, nh, nw), dtype=np.float32)
+                # for k in trange(c, desc='loop channel'):
                 #    for di in trange(nh, desc='loop win_y'):
                 #        for dj in trange(nw, desc='loop win_x'):
                 for k in range(c):
@@ -64,6 +65,6 @@ class FGPoolLayer(BaseLayer):
                                 X_pool[:, k, di, dj] = np.mean(src, axis=1)
                             else:
                                 raise ValueError('Unkown Pool Method, pool_method={}'.format(self.pool_method))
-                #print ('\n')
+                # print ('\n')
                 LOGGER.info('[data][{},{}] tops[{}].shape={}'.format(self.name, phase, ti, X_pool.shape))
                 self.data_cache.update(phase, top_name, X_pool)

@@ -14,6 +14,7 @@ from ..utils.log_utils import get_logger
 
 LOGGER = get_logger('gcforest.estimators.sklearn_estimators')
 
+
 def forest_predict_batch_size(clf, X):
     import psutil
     free_memory = psutil.virtual_memory().free

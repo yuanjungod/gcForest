@@ -20,15 +20,18 @@ from ..utils.metrics import accuracy_pb
 
 LOGGER = get_logger('gcforest.cascade.cascade_classifier')
 
+
 def check_dir(path):
     d = osp.abspath(osp.join(path, osp.pardir))
     if not osp.exists(d):
         os.makedirs(d)
 
+
 def calc_accuracy(y_true, y_pred, name, prefix=""):
-    acc = 100. * np.sum(np.asarray(y_true)==y_pred) / len(y_true)
+    acc = 100. * np.sum(np.asarray(y_true) == y_pred) / len(y_true)
     LOGGER.info('{}Accuracy({})={:.2f}%'.format(prefix, name, acc))
     return acc
+
 
 def get_opt_layer_id(acc_list):
     """ Return layer id with max accuracy on training data """
@@ -67,12 +70,12 @@ class CascadeClassifier(object):
         self.est_configs = self.get_value("estimators", None, list, required=True)
         self.look_indexs_cycle = self.get_value("look_indexs_cycle", None, list)
         self.random_state = self.get_value("random_state", None, int)
-        self.data_save_dir = self.get_value("data_save_dir", None, basestring)
+        self.data_save_dir = self.get_value("data_save_dir", None, str)
         self.data_save_rounds = self.get_value("data_save_rounds", 0, int)
         if self.data_save_rounds > 0:
             assert self.data_save_dir is not None, "data_save_dir should not be null when data_save_rounds>0"
         self.eval_metrics = [("predict", accuracy_pb)]
-        #LOGGER.info("\n" + json.dumps(ca_config, sort_keys=True, indent=4, separators=(',', ':')))
+        # LOGGER.info("\n" + json.dumps(ca_config, sort_keys=True, indent=4, separators=(',', ':')))
 
     @property
     def n_estimators_1(self):
@@ -80,12 +83,12 @@ class CascadeClassifier(object):
         return len(self.est_configs)
     
     def get_value(self, key, default_value, value_types, required=False):
-        return get_config_value(self.ca_config, key, default_value, value_types, 
-                required=required, config_name="cascade")
+        return get_config_value(
+            self.ca_config, key, default_value, value_types, required=required, config_name="cascade")
 
     def _init_estimators(self, li, ei):
         est_args = self.est_configs[ei].copy()
-        est_name ="layer_{} - estimator_{} - {}_folds".format(li, ei, est_args["n_folds"])
+        est_name = "layer_{} - estimator_{} - {}_folds".format(li, ei, est_args["n_folds"])
         # n_folds
         n_folds = int(est_args["n_folds"])
         est_args.pop("n_folds")
@@ -130,7 +133,7 @@ class CascadeClassifier(object):
         for i, X_group in enumerate(X_groups_train):
             assert(X_group.shape[0] == n_trains)
             X_group = X_group.reshape(n_trains, -1)
-            group_dims.append( X_group.shape[1] )
+            group_dims.append(X_group.shape[1] )
             group_starts.append(i if i == 0 else group_starts[i - 1] + group_dims[i])
             group_ends.append(group_starts[i] + group_dims[i])
             X_train = np.hstack((X_train, X_group))
@@ -178,9 +181,9 @@ class CascadeClassifier(object):
                 for ei, est_config in enumerate(self.est_configs):
                     est = self._init_estimators(layer_id, ei)
                     # fit_trainsform
-                    y_probas = est.fit_transform(X_cur_train, y_train, y_train,
-                            test_sets=[("test", X_cur_test, y_test)], eval_metrics=self.eval_metrics, 
-                            keep_model_in_mem=False)
+                    y_probas = est.fit_transform(
+                        X_cur_train, y_train, y_train, test_sets=[("test", X_cur_test, y_test)],
+                        eval_metrics=self.eval_metrics, keep_model_in_mem=False)
                     # train
                     X_proba_train[:,ei*n_classes:ei*n_classes+n_classes] = y_probas[0]
                     y_train_proba_li += y_probas[0]
@@ -189,8 +192,12 @@ class CascadeClassifier(object):
                     y_test_proba_li += y_probas[1]
                 y_train_proba_li /= len(self.est_configs)
                 y_test_proba_li /= len(self.est_configs)
-                train_avg_acc = calc_accuracy(y_train, np.argmax(y_train_proba_li, axis=1), 'layer_{} - train.classifier_average'.format(layer_id))
-                test_avg_acc = calc_accuracy(y_test, np.argmax(y_test_proba_li, axis=1), 'layer_{} - test.classifier_average'.format(layer_id))
+                train_avg_acc = calc_accuracy(
+                    y_train, np.argmax(y_train_proba_li, axis=1),
+                    'layer_{} - train.classifier_average'.format(layer_id))
+                test_avg_acc = calc_accuracy(
+                    y_test, np.argmax(y_test_proba_li, axis=1),
+                    'layer_{} - test.classifier_average'.format(layer_id))
                 train_acc_list.append(train_avg_acc)
                 test_acc_list.append(test_avg_acc)
 
@@ -199,10 +206,11 @@ class CascadeClassifier(object):
                 if opt_layer_id == layer_id:
                     opt_datas = [X_cur_train, y_train, X_cur_test, y_test]
                 # early stop
-                if self.early_stopping_rounds > 0 and layer_id - opt_layer_id >= self.early_stopping_rounds:
+                if layer_id - opt_layer_id >= self.early_stopping_rounds > 0:
                     # log and save final result (opt layer)
-                    LOGGER.info("[Result][Optimal Level Detected] opt_layer_id={}, accuracy_train={:.2f}%, accuracy_test={:.2f}%".format(
-                        opt_layer_id, train_acc_list[opt_layer_id], test_acc_list[opt_layer_id]))
+                    LOGGER.info("[Result][Optimal Level Detected] opt_layer_id={}, accuracy_train={:.2f}%, "
+                                "accuracy_test={:.2f}%".format(
+                                 opt_layer_id, train_acc_list[opt_layer_id], test_acc_list[opt_layer_id]))
                     if self.data_save_dir is not None:
                         self.save_data( opt_layer_id, *opt_datas)
                     return opt_layer_id, opt_datas[0], opt_datas[1], opt_datas[2], opt_datas[3]
@@ -213,10 +221,11 @@ class CascadeClassifier(object):
                 layer_id += 1
             opt_datas = [X_cur_train, y_train, X_cur_test, y_test]
             # log and save final result (last layer)
-            LOGGER.info("[Result][Reach Max Layer] max_layer_num={}, accuracy_train={:.2f}%, accuracy_test={:.2f}%".format(
-                self.max_layers, train_acc_list[-1], test_acc_list[-1]))
+            LOGGER.info("[Result][Reach Max Layer] max_layer_num={}, accuracy_train={:.2f}%, "
+                        "accuracy_test={:.2f}%".format(
+                         self.max_layers, train_acc_list[-1], test_acc_list[-1]))
             if self.data_save_dir is not None:
-                self.save_data( self.max_layers - 1, *opt_datas)
+                self.save_data(self.max_layers - 1, *opt_datas)
             return self.max_layers, opt_datas[0], opt_datas[1], opt_datas[2], opt_datas[3]
         except KeyboardInterrupt:
             pass

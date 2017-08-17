@@ -22,6 +22,7 @@ LOGGER = get_logger("gcforest.layers.fg_win_layer")
 #CV_POLICYS = ["data", "win"]
 #CV_POLICYS = ["data"]
 
+
 class FGWinLayer(BaseLayer):
     def __init__(self, layer_config, data_cache):
         """
@@ -44,8 +45,8 @@ class FGWinLayer(BaseLayer):
         self.pad_x = self.get_value("pad_x", 0, int)
         self.pad_y = self.get_value("pad_y", 0, int)
         self.n_classes = self.get_value("n_classes", None, int, required=True)
-        #self.cv_policy = layer_config.get("cv_policy", "data")
-        #assert(self.cv_policy in CV_POLICYS)
+        # self.cv_policy = layer_config.get("cv_policy", "data")
+        # assert(self.cv_policy in CV_POLICYS)
         assert len(self.bottom_names) >= 2
         assert len(self.est_configs) == len(self.top_names), "Each estimator shoud produce one unique top"
         self.eval_metrics = [("predict", accuracy_pb), ("vote", accuracy_win_vote), ("avg", accuracy_win_avg)]
@@ -101,9 +102,10 @@ class FGWinLayer(BaseLayer):
 
             # fit
             est = self._init_estimators(ti, train_config.random_state)
-            y_probas = est.fit_transform(X_train_win, y_train_win, y_train_win[:,0], cache_dir=train_config.model_cache_dir, 
-                    test_sets = test_sets, eval_metrics=self.eval_metrics,
-                    keep_model_in_mem=train_config.keep_model_in_mem)
+            y_probas = est.fit_transform(
+                X_train_win, y_train_win, y_train_win[:, 0], cache_dir=train_config.model_cache_dir,
+                test_sets = test_sets, eval_metrics=self.eval_metrics,
+                keep_model_in_mem=train_config.keep_model_in_mem)
 
             for pi, phase in enumerate(phases):
                 y_proba = y_probas[pi].reshape((-1, nh, nw, self.n_classes)).transpose((0, 3, 1, 2))
@@ -120,7 +122,7 @@ class FGWinLayer(BaseLayer):
                 y_proba = self.data_cache.get(phase, top_name)
                 y_proba = y_proba.transpose((0,2,3,1))
                 y_proba = y_proba.reshape((y_proba.shape[0], -1, y_proba.shape[3]))
-                y = y[:,np.newaxis].repeat(y_proba.shape[1], axis=1)
+                y = y[:, np.newaxis].repeat(y_proba.shape[1], axis=1)
                 for eval_name, eval_metric in eval_metrics:
                     acc = eval_metric(y, y_proba)
                     LOGGER.info("Accuracy({}.{}.{})={:.2f}%".format(top_name, phase, eval_name, acc*100))

@@ -9,12 +9,12 @@
 "dataset": {
     "train": {
         "type": "ds_pickle2",
-        "data_path": "/storage/root/gcforest/cifar10/fg-tree500-depth100-3folds/datas/train/outputs.pkl",
+        "data_path": "E:/code/gcforest/cifar10/fg-tree500-depth100-3folds/datas/train/outputs.pkl",
         "X_keys": ["pool1/8x8/ets", "pool1/8x8/rf", "pool1/11x11/ets", "pool1/11x11/rf", "pool1/16x16/ets", "pool1/16x16/rf"]
     },
     "test": {
         "type": "ds_pickle2", 
-        "data_path": "/storage/root/gcforest/cifar10/fg-tree500-depth100-3folds/datas/test/outputs.pkl",
+        "data_path": "E:/code/gcforest/cifar10/fg-tree500-depth100-3folds/datas/test/outputs.pkl",
         "X_keys": ["pool1/8x8/ets", "pool1/8x8/rf", "pool1/11x11/ets", "pool1/11x11/rf", "pool1/16x16/ets", "pool1/16x16/rf"]
     }
 },
@@ -26,8 +26,7 @@
         [0, 1],
         [2, 3],
         [4, 5],
-        [6, 7],
-        [0, 1, 2, 3, 4, 5, 6, 7]
+        [0, 1, 2, 3, 4, 5]
     ],
     "n_classes": 10,
     "estimators": [
@@ -40,7 +39,7 @@
         {"n_folds":3,"type":"RandomForestClassifier","n_estimators":1000,"max_depth":null,"n_jobs":-1},
         {"n_folds":3,"type":"RandomForestClassifier","n_estimators":1000,"max_depth":null,"n_jobs":-1}
     ],
-    "data_save_dir": "/storage/root/gcforest/cifar10/fg-tree500-depth100-3folds/cascade/datas",
+    "data_save_dir": "E:/code/gcforest/cifar10/fg-tree500-depth100-3folds/cascade/datas",
     "data_save_rounds": 5
 }
 }

@@ -15,15 +15,18 @@ from .utils.cache_utils import name2path
 
 LOGGER = get_logger("gcforest.data_cache")
 
+
 def check_dir(path):
     """ make sure the dir specified by path got created """
     d = osp.abspath(osp.join(path, osp.pardir))
     if not osp.exists(d):
         os.makedirs(d)
 
+
 def data_disk_path(cache_dir, phase, data_name):
     data_path = osp.join(cache_dir, phase, name2path(data_name) + ".npy")
     return data_path
+
 
 class DataCache(object):
     def __init__(self, config):
@@ -80,7 +83,7 @@ class DataCache(object):
         data_name (str): name for tops/bottoms  
         ignore_no_exist (bool): if True, when no data found, return None, otherwise raise e
         """
-        assert isinstance(data_name, basestring), "data_name={}, type(data_name)={}".format(data_name, type(data_name))
+        assert isinstance(data_name, str), "data_name={}, type(data_name)={}".format(data_name, type(data_name))
         # return data if data in memory
         data_mem = self.datas[phase].get(data_name, None)
         if data_mem is not None:

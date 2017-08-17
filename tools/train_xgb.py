@@ -19,11 +19,13 @@ from gcforest.exp_utils import concat_datas
 from gcforest.datasets import get_dataset
 LOGGER = get_logger("tools.tarin_xgb")
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', dest='model', type=str, required=True, help='gcfoest Net Model File')
     args = parser.parse_args()
     return args
+
 
 def train_xgb(X_train, y_train, X_test, y_test):
     n_trees = 1000

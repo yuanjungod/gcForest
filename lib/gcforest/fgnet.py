@@ -22,8 +22,8 @@ class FGNet(object):
     GCForest : FineGrained Components
     """
     def __init__(self, net_config, data_cache):
-        #net_config_str = json.dumps(net_config, sort_keys=True, indent=4, separators=(',', ':'))
-        #LOGGER.info("\n" + net_config_str)
+        # net_config_str = json.dumps(net_config, sort_keys=True, indent=4, separators=(',', ':'))
+        # LOGGER.info("\n" + net_config_str)
         self.data_cache = data_cache
         self.inputs = net_config.get("inputs", [])
         self.check_net_config(net_config)
@@ -124,14 +124,19 @@ class FGNet(object):
             else:
                 top = layer_config["tops"][0]
                 if top != layer_config["name"]:
-                    LOGGER.warn("layer_name != top_name, You should check to make sure this is what you want!!! layer_config={}".format(layer_config))
+                    LOGGER.warn(
+                        "layer_name != top_name, You should check to make sure this is what you want!!! "
+                        "layer_config={}".format(layer_config))
+
 
 def strip(s):
-    if s is None: return None
+    if s is None:
+        return None
     s = s.strip()
     if len(s) == 0:
         return None
     return s
+
 
 class FGTrainConfig(object):
     def __init__(self, train_config):

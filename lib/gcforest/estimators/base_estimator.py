@@ -59,7 +59,7 @@ class BaseClassifierWrapper(object):
         if cache_path is not None:
             # saved in disk
             LOGGER.info("Save estimator to {} ...".format(cache_path))
-            check_dir(cache_path); 
+            check_dir(cache_path)
             self._save_model_to_disk(self.est, cache_path)
             self.est = None
         else:

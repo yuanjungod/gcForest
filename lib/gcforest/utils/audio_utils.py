@@ -1,15 +1,18 @@
 import numpy as np
 
+
 def select_feature_func(feature_name):
     if feature_name == 'aqibsaeed_1':
         return get_feature_aqibsaeed_1
     elif feature_name == 'mfcc':
         return get_feature_mfcc
 
+
 def get_feature_mfcc(X, sr, n_mfcc=13):
     import librosa
     mfcc = librosa.feature.mfcc(y=X, sr=sr, n_mfcc=n_mfcc)
     return mfcc
+
 
 def get_feature_aqibsaeed_1(X, sr, au_path=None):
     """
@@ -26,6 +29,7 @@ def get_feature_aqibsaeed_1(X, sr, au_path=None):
     tonnetz = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(X), sr=sr).T,axis=0)
     feature = np.hstack([mfccs,chroma,mel,contrast,tonnetz])
     return feature
+
 
 def get_feature_aqibsaeed_conv(X, sr, au_path=None):
     """

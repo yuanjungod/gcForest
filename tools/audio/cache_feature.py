@@ -26,6 +26,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 def save_cache(src_path, des_path, get_feature_func):
     des_path = osp.splitext(des_path)[0] + '.npy'
     try:
@@ -36,10 +37,11 @@ def save_cache(src_path, des_path, get_feature_func):
         des_par = osp.abspath(osp.join(des_path, osp.pardir))
         if not osp.exists(des_par):
             os.makedirs(des_par)
-    except Exception, e:
+    except Exception:
         print("[ERROR] Unkown error happend when dealing with{}".format(src_path))
-        #print(e)
+        # print(e)
         return -1
+
     np.save(des_path, feature)
     return 0
 

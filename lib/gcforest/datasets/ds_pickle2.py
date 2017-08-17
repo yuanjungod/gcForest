@@ -10,12 +10,13 @@ from __future__ import print_function
 import pickle
 import os, os.path as osp
 
+
 class DSPickle2(object):
     def __init__(self, data_path, X_keys):
         self.data_path = data_path
         print('Loading data from {}'.format(data_path))
-        with open(data_path) as f:
-            datas = pickle.load(f)
+        with open(data_path, 'rb') as f:
+            datas = pickle.load(f, encoding="ASCII")
         self.X = []
         for X_key in X_keys:
             self.X.append(datas[X_key])

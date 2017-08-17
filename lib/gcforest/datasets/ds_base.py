@@ -11,6 +11,7 @@ ATTN2: This package was developed by Mr.Ji Feng(fengj@lamda.nju.edu.cn). The rea
 import os.path as osp
 import numpy as np
 
+
 class ds_base(object):
     def __init__(self, data_set="train", norm=False, layout_x="tensor", layout_y="label", conf=None):
         self.conf = conf
@@ -42,7 +43,7 @@ class ds_base(object):
             X = X.reshape((X.shape[0], -1))
         elif self.layout_x == "sequence":
             assert X.shape[3] == 1
-            X = X[:,:,:,0].transpose((0,2,1))
+            X = X[:, :, :, 0].transpose((0, 2, 1))
         else:
             raise ValueError("DataSet doesn't supported layout_x: ", self.layout_x)
         return X

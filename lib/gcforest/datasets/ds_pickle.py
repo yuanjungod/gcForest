@@ -24,6 +24,7 @@ def save_dataset(data_path, X, y):
     with open(data_path, 'wb') as f:
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
+
 def load_dataset(data_path):
     with open(data_path, 'rb') as f:
         data = pickle.load(f)
@@ -31,6 +32,7 @@ def load_dataset(data_path):
     y = data['y']
     print('Data Loaded from {} (X.shape={}, y.shape={})'.format(data_path, X.shape, y.shape))
     return X, y
+
 
 class DSPickle(ds_base):
     def __init__(self, data_path, **kwargs):

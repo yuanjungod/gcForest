@@ -12,6 +12,7 @@ from .fg_concat_layer import FGConcatLayer
 from .fg_pool_layer import FGPoolLayer
 from .fg_win_layer import FGWinLayer
 
+
 def get_layer_class(layer_type):
     if layer_type == "FGWinLayer":
         return FGWinLayer
@@ -20,6 +21,7 @@ def get_layer_class(layer_type):
     if layer_type == "FGPoolLayer":
         return FGPoolLayer
     raise ValueError("Unkown Layer Type: ", layer_type)
+
 
 def get_layer(layer_config, data_cache):
     """

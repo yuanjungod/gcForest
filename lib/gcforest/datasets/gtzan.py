@@ -62,6 +62,7 @@ def read_data(anno_path, mode, genre_base=None):
     y = np.asarray(y)
     return X, y
 
+
 class GTZAN(ds_base):
     def __init__(self, cache=None, **kwargs):
         super(GTZAN, self).__init__(**kwargs)

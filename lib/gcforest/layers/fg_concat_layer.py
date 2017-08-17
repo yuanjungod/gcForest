@@ -15,6 +15,7 @@ from ..utils.log_utils import get_logger
 
 LOGGER = get_logger('gcforest.layers.fg_concat_layer')
 
+
 class FGConcatLayer(BaseLayer):
     def __init__(self, layer_config, data_cache):
         """

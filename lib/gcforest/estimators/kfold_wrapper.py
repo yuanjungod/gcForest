@@ -16,6 +16,7 @@ from ..utils.cache_utils import name2path
 
 LOGGER = get_logger("gcforest.estimators.kfold_wrapper")
 
+
 class KFoldWrapper(object):
     """
     K-Fold Wrapper

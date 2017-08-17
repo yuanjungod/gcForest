@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+
 def load_json(path):
     import json
     """
@@ -12,6 +13,7 @@ def load_json(path):
                 continue
             lines.append(row)
     return json.loads("\n".join(lines))
+
 
 def get_config_value(config, key, default_value, value_types, required=False, config_name=None):
     """

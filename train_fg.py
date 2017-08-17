@@ -15,6 +15,7 @@ import json
 from lib.gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
 from lib.gcforest.utils.config_utils import load_json
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', dest='model', type=str, required=True, help='gcfoest Net Model File')
@@ -40,20 +41,20 @@ if __name__ == '__main__':
     if args.save_outputs:
         assert train_config.data_cache.cache_dir is not None, \
                 "Data cache dir must be set in model's json config when save_outputs option is on!!"
-
     data_train = get_dataset(config["dataset"]["train"])
     data_test = get_dataset(config["dataset"]["test"])
-
+    print(data_train.X.shape)
+    # exit()
     net = FGNet(config["net"], train_config.data_cache)
     net.fit_transform(data_train.X, data_train.y, data_test.X, data_test.y, train_config)
 
     if args.save_outputs:
         net.save_outputs("train")
         net.save_outputs("test")
-    #prec_ets(1000, X_train_enc, data_train.y, X_test_enc, data_test.y, random_state=0)
-    #prec_ets(2000, X_train_enc, data_train.y, X_test_enc, data_test.y, random_state=0)
-    #prec_xgb(1000, 5, 
-    #        concat_datas(net.get_outputs("train")), data_train.y, 
+    # prec_ets(1000, X_train_enc, data_train.y, X_test_enc, data_test.y, random_state=0)
+    # prec_ets(2000, X_train_enc, data_train.y, X_test_enc, data_test.y, random_state=0)
+    # prec_xgb(1000, 5,
+    #        concat_datas(net.get_outputs("train")), data_train.y,
     #        concat_datas(net.get_outputs("test")), data_test.y)
     
     import IPython; IPython.embed()

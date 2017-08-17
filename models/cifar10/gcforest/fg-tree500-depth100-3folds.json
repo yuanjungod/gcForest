@@ -7,8 +7,8 @@
 
 {
 "dataset":{
-    "train": {"type": "cifar10", "data_set": "train", "layout_x": "tensor"},
-    "test": {"type": "cifar10", "data_set": "test", "layout_x": "tensor"}
+    "train": {"type": "cifar10", "data_set": "train-small", "layout_x": "tensor"},
+    "test": {"type": "cifar10", "data_set": "test-small", "layout_x": "tensor"}
 },
 "train":{
     "keep_model_in_mem":0,
@@ -20,7 +20,7 @@
         "keep_in_mem":{
             "default":0
         },
-        "cache_dir":"/mnt/raid/fengji/gcforest/cifar10/fg-tree500-depth100-3folds/datas"
+        "cache_dir":"E:/code/gcforest/cifar10/fg-tree500-depth100-3folds/datas"
     }
 },
 "net":{
