@@ -10,13 +10,12 @@ import sys, os, os.path as osp
 import argparse
 import numpy as np
 import xgboost as xgb
-sys.path.insert(0, 'lib')
 
-from gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
-from gcforest.fgnet import FGNet, FGTrainConfig
-from gcforest.utils.config_utils import load_json
-from gcforest.exp_utils import concat_datas
-from gcforest.datasets import get_dataset
+from lib.gcforest.utils.log_utils import get_logger, update_default_level, update_default_logging_dir
+from lib.gcforest.fgnet import FGNet, FGTrainConfig
+from lib.gcforest.utils.config_utils import load_json
+from lib.gcforest.exp_utils import concat_datas
+from lib.gcforest.datasets import get_dataset
 LOGGER = get_logger("tools.tarin_xgb")
 
 
@@ -33,8 +32,9 @@ def train_xgb(X_train, y_train, X_test, y_test):
     X_test = X_test.reshape((X_test.shape[0], -1))
     LOGGER.info('start predict: n_trees={},X_train.shape={},y_train.shape={},X_test.shape={},y_test.shape={}'.format(
         n_trees, X_train.shape, y_train.shape, X_test.shape, y_test.shape))
-    clf = xgb.XGBClassifier(n_estimators=n_trees, max_depth=5, objective='multi:softprob',
-            seed=0, silent=True, nthread=-1, learning_rate=0.1)
+    clf = xgb.XGBClassifier(
+        n_estimators=n_trees, max_depth=5, objective='multi:softprob',
+        seed=0, silent=True, nthread=-1, learning_rate=0.1)
     eval_set = [(X_test, y_test)]
     clf.fit(X_train, y_train, eval_set=eval_set, eval_metric="merror", early_stopping_rounds=10)
     y_pred = clf.predict(X_test)

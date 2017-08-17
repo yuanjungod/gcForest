@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 
 from .ds_base import ds_base
 
+
 def load_data(train_num, train_repeat):
     test_size = (10. - train_num) / 10
     data = fetch_olivetti_faces()
@@ -24,6 +25,7 @@ def load_data(train_num, train_repeat):
         y_train = y_train.repeat(train_repeat)
     return X_train, y_train, X_test, y_test
 
+
 class OlivettiFace(ds_base):
     def __init__(self, train_num=5, train_repeat=1, **kwargs):
         """
@@ -34,7 +36,7 @@ class OlivettiFace(ds_base):
         X_train, y_train, X_test, y_test = load_data(train_num, train_repeat)
         X, y = self.get_data_by_imageset(X_train, y_train, X_test, y_test)
 
-        X = X[:,np.newaxis,:,:]
+        X = X[:, np.newaxis, :, :]
         X = self.init_layout_X(X)
         y = self.init_layout_y(y)
         self.X = X

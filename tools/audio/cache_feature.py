@@ -12,9 +12,9 @@ import numpy as np
 import os, os.path as osp
 import sys
 
-sys.path.insert(0, 'lib')
-from gcforest.datasets.gtzan import GTZAN
-from gcforest.utils.audio_utils import select_feature_func
+from lib.gcforest.datasets.gtzan import GTZAN
+from lib.gcforest.utils.audio_utils import select_feature_func
+
 
 def parse_args():
     import argparse

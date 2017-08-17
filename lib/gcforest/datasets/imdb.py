@@ -28,8 +28,8 @@ class IMDB(ds_base):
             max_features = 5000
             (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=max_features)
         else:
-            (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=None, 
-                    skip_top=0, maxlen=None, seed=113, start_char=1, oov_char=2, index_from=3)
+            (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=None, skip_top=0, maxlen=None,
+                                                                  seed=113, start_char=1, oov_char=2, index_from=3)
         X, y = self.get_data_by_imageset(X_train, y_train, X_test, y_test)
         print('data_set={}, Average sequence length: {}'.format(self.data_set, np.mean(list(map(len, X)))))
 
@@ -40,7 +40,7 @@ class IMDB(ds_base):
         elif feature == 'tfidf':
             from sklearn.feature_extraction.text import TfidfTransformer
             transformer = TfidfTransformer(smooth_idf=False)
-            #transformer = TfidfTransformer(smooth_idf=True)
+            # transformer = TfidfTransformer(smooth_idf=True)
             X_train_bin = np.zeros((len(X_train), max_features), dtype=np.int16)
             X_bin = np.zeros((len(X), max_features), dtype=np.int16)
             for i, X_i in enumerate(X_train):
@@ -68,6 +68,6 @@ class IMDB(ds_base):
         else:
             raise ValueError('Unkown feature: ', feature)
 
-        X = X[:,np.newaxis,:,np.newaxis]
+        X = X[:, np.newaxis, :, np.newaxis]
         self.X = self.init_layout_X(X)
         self.y = self.init_layout_y(y)

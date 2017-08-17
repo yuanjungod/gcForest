@@ -19,8 +19,8 @@ from ..utils.log_utils import get_logger
 
 LOGGER = get_logger("gcforest.layers.fg_win_layer")
 
-#CV_POLICYS = ["data", "win"]
-#CV_POLICYS = ["data"]
+# CV_POLICYS = ["data", "win"]
+# CV_POLICYS = ["data"]
 
 
 class FGWinLayer(BaseLayer):
@@ -58,7 +58,7 @@ class FGWinLayer(BaseLayer):
         """
         top_name = self.top_names[ei]
         est_args = self.est_configs[ei].copy()
-        est_name ="{}/{}_folds".format(top_name, est_args["n_folds"])
+        est_name = "{}/{}_folds".format(top_name, est_args["n_folds"])
         # n_folds
         n_folds = int(est_args["n_folds"])
         est_args.pop("n_folds")

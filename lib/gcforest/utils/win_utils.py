@@ -33,12 +33,12 @@ def get_windows(X, win_x, win_y, stride_x=1, stride_y=1, pad_x=0, pad_y=0):
     assert len(X.shape) == 4
     n, c, h, w = X.shape
     if pad_y > 0:
-        X = np.concatenate(( X, np.zeros((n, c, pad_y, w), dtype=X.dtype) ), axis=2)
-        X = np.concatenate(( np.zeros((n, c, pad_y, w),dtype=X.dtype), X ), axis=2)
+        X = np.concatenate((X, np.zeros((n, c, pad_y, w), dtype=X.dtype)), axis=2)
+        X = np.concatenate((np.zeros((n, c, pad_y, w),dtype=X.dtype), X), axis=2)
     n, c, h, w = X.shape
     if pad_x > 0:
-        X = np.concatenate(( X, np.zeros((n, c, h, pad_x), dtype=X.dtype) ), axis=3)
-        X = np.concatenate(( np.zeros((n, c, h, pad_x), dtype=X.dtype), X ), axis=3)
+        X = np.concatenate((X, np.zeros((n, c, h, pad_x), dtype=X.dtype)), axis=3)
+        X = np.concatenate((np.zeros((n, c, h, pad_x), dtype=X.dtype), X), axis=3)
     n, c, h, w = X.shape
     nc = win_y * win_x * c
     nh = (h - win_y) // stride_y + 1

@@ -43,8 +43,6 @@ if __name__ == '__main__':
                 "Data cache dir must be set in model's json config when save_outputs option is on!!"
     data_train = get_dataset(config["dataset"]["train"])
     data_test = get_dataset(config["dataset"]["test"])
-    print(data_train.X.shape)
-    # exit()
     net = FGNet(config["net"], train_config.data_cache)
     net.fit_transform(data_train.X, data_train.y, data_test.X, data_test.y, train_config)
 

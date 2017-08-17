@@ -117,5 +117,5 @@ class DataCache(object):
                 raise ValueError("Cache base unset, can't Save data ({}->{}) to disk".format(phase, data_name))
             data_path = data_disk_path(self.cache_dir, phase, data_name)
             LOGGER.info("Updating data ({}->{}, shape={}) in disk: {}".format(phase, data_name, data.shape, data_path))
-            check_dir(data_path);
+            check_dir(data_path)
             np.save(data_path, data)

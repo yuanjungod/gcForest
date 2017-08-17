@@ -139,7 +139,7 @@ def plot_confusion_matrix(cm, label_list, title='Confusion matrix', cmap=None):
     from matplotlib import pylab
     cm = np.asarray(cm, dtype=np.float32)
     for i, row in enumerate(cm):
-        cm[i] = cm[i] / np.sum(cm[i])
+        cm[i] //= np.sum(cm[i])
     #import matplotlib.pyplot as plt
     #plt.ion()
     pylab.clf()

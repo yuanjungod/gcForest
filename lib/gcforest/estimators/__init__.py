@@ -17,7 +17,7 @@ def get_estimator_class(est_type):
         return GCExtraTreesClassifier
     if est_type == "RandomForestClassifier":
         return GCRandomForestClassifier
-    #if est_type == "XGBClassifier":
+    # if est_type == "XGBClassifier":
     #    return GCXGBClassifier
     raise ValueError('Unkown Estimator Type, est_type={}'.format(est_type))
 

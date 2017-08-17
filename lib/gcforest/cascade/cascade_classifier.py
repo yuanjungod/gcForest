@@ -133,7 +133,7 @@ class CascadeClassifier(object):
         for i, X_group in enumerate(X_groups_train):
             assert(X_group.shape[0] == n_trains)
             X_group = X_group.reshape(n_trains, -1)
-            group_dims.append(X_group.shape[1] )
+            group_dims.append(X_group.shape[1])
             group_starts.append(i if i == 0 else group_starts[i - 1] + group_dims[i])
             group_ends.append(group_starts[i] + group_dims[i])
             X_train = np.hstack((X_train, X_group))
@@ -153,12 +153,12 @@ class CascadeClassifier(object):
         opt_datas = [None, None, None, None]
         try:
             # probability of each cascades's estimators
-            X_proba_train = np.zeros((X_train.shape[0],n_classes*self.n_estimators_1), dtype=np.float32)
-            X_proba_test = np.zeros((X_test.shape[0],n_classes*self.n_estimators_1), dtype=np.float32)
+            X_proba_train = np.zeros((X_train.shape[0], n_classes*self.n_estimators_1), dtype=np.float32)
+            X_proba_test = np.zeros((X_test.shape[0], n_classes*self.n_estimators_1), dtype=np.float32)
             X_cur_train, X_cur_test = None, None
             layer_id = 0
             while 1:
-                if self.max_layers > 0 and layer_id >= self.max_layers:
+                if layer_id >= self.max_layers > 0:
                     break
                 # Copy previous cascades's probability into current X_cur
                 if layer_id == 0:
@@ -185,10 +185,10 @@ class CascadeClassifier(object):
                         X_cur_train, y_train, y_train, test_sets=[("test", X_cur_test, y_test)],
                         eval_metrics=self.eval_metrics, keep_model_in_mem=False)
                     # train
-                    X_proba_train[:,ei*n_classes:ei*n_classes+n_classes] = y_probas[0]
+                    X_proba_train[:, ei*n_classes:ei*n_classes+n_classes] = y_probas[0]
                     y_train_proba_li += y_probas[0]
                     # test
-                    X_proba_test[:,ei*n_classes:ei*n_classes+n_classes] = y_probas[1]
+                    X_proba_test[:, ei*n_classes:ei*n_classes+n_classes] = y_probas[1]
                     y_test_proba_li += y_probas[1]
                 y_train_proba_li /= len(self.est_configs)
                 y_test_proba_li /= len(self.est_configs)

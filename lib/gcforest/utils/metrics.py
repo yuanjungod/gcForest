@@ -16,8 +16,6 @@ def accuracy_pb(y_true, y_proba):
 
 def accuracy_win_vote(y_true, y_proba):
     """
- 
-    
     Parameters
     ----------
     y_true: n x n_windows
@@ -25,17 +23,15 @@ def accuracy_win_vote(y_true, y_proba):
     """
     n_classes = y_proba.shape[-1]
     y_pred = win_vote(np.argmax(y_proba, axis=2), n_classes)
-    return accuracy(y_true[:,0], y_pred)
+    return accuracy(y_true[:, 0], y_pred)
 
 
 def accuracy_win_avg(y_true, y_proba):
     """
- 
-    
     Parameters
     ----------
     y_true: n x n_windows
     y_proba: n x n_windows x n_classes
     """
     y_pred = win_avg(y_proba)
-    return accuracy(y_true[:,0], y_pred)
+    return accuracy(y_true[:, 0], y_pred)

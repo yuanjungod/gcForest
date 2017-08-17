@@ -75,8 +75,10 @@ class ds_base(object):
             raise ValueError("Unsupported data_set: ", self.data_set)
         return X, y
 
+
 def get_dataset_base():
     return osp.abspath(osp.join(__file__, osp.pardir, osp.pardir, osp.pardir, osp.pardir, "datasets"))
+
 
 def get_dataset_cache_base():
     return osp.abspath(osp.join(__file__, osp.pardir, osp.pardir, osp.pardir, osp.pardir, "datasets-cache"))
