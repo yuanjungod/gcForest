@@ -13,6 +13,7 @@ from keras.datasets import mnist
 
 from .ds_base import ds_base
 
+
 class MNIST(ds_base):
     def __init__(self, **kwargs):
         super(MNIST, self).__init__(**kwargs)

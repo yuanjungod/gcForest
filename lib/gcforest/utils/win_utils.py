@@ -34,7 +34,7 @@ def get_windows(X, win_x, win_y, stride_x=1, stride_y=1, pad_x=0, pad_y=0):
     n, c, h, w = X.shape
     if pad_y > 0:
         X = np.concatenate((X, np.zeros((n, c, pad_y, w), dtype=X.dtype)), axis=2)
-        X = np.concatenate((np.zeros((n, c, pad_y, w),dtype=X.dtype), X), axis=2)
+        X = np.concatenate((np.zeros((n, c, pad_y, w), dtype=X.dtype), X), axis=2)
     n, c, h, w = X.shape
     if pad_x > 0:
         X = np.concatenate((X, np.zeros((n, c, h, pad_x), dtype=X.dtype)), axis=3)
@@ -46,7 +46,7 @@ def get_windows(X, win_x, win_y, stride_x=1, stride_y=1, pad_x=0, pad_y=0):
     X_win = np.empty((nc, n * nh * nw), dtype=np.float32)
     LOGGER.info("get_windows_start: X.shape={}, X_win.shape={}, nw={}, nh={}, c={}, win_x={}, win_y={}, "
                 "stride_x={}, stride_y={}".format(
-                X.shape, X_win.shape, nw, nh, c, win_x, win_y, stride_x, stride_y))
+                 X.shape, X_win.shape, nw, nh, c, win_x, win_y, stride_x, stride_y))
     Parallel(n_jobs=-1, backend="threading", verbose=0)(
             delayed(get_windows_channel)(X, X_win, des_id, nw, nh, win_x, win_y, stride_x, stride_y)
             for des_id in range(c * win_x * win_y))

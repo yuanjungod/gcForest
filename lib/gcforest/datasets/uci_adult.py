@@ -13,6 +13,7 @@ import numpy as np
 from .ds_base import ds_base
 from .ds_base import get_dataset_base
 
+
 class FeatureParser(object):
     def __init__(self, desc):
         desc = desc.strip()
@@ -85,6 +86,7 @@ def load_data(data_set, cate_as_onehot):
 
 
 class UCIAdult(ds_base):
+
     def __init__(self, cate_as_onehot=0, **kwargs):
         """
         cate_as_number: 是否把包含离散取值的feature用onehot表示
@@ -94,7 +96,7 @@ class UCIAdult(ds_base):
             cate_as_onehot = int(self.conf.get("cate_as_onehot", 0))
         X, y = load_data(self.data_set, cate_as_onehot)
 
-        X = X[:,np.newaxis,:,np.newaxis]
+        X = X[:, np.newaxis, :, np.newaxis]
         X = self.init_layout_X(X)
         y = self.init_layout_y(y)
         self.X = X

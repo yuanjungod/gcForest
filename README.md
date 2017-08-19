@@ -1,10 +1,12 @@
 gcForest v1.0
 ========
-This is the official clone for the implementation of gcForest.(The University's webserver is unstable sometimes, therefore we put the official clone here at github)
+This is the official clone for the implementation of gcForest.(The University's webserver is unstable sometimes,
+therefore we put the official clone here at github)
 
 Package Official Website: http://lamda.nju.edu.cn/code_gcForest.ashx
 
-This package is provided "AS IS" and free for academic usage. You can run it at your own risk. For other purposes, please contact Prof. Zhi-Hua Zhou (zhouzh@lamda.nju.edu.cn).
+This package is provided "AS IS" and free for academic usage. You can run it at your own risk. For other purposes,
+please contact Prof. Zhi-Hua Zhou (zhouzh@lamda.nju.edu.cn).
 
 Description: A python 2.7 implementation of gcForest proposed in [1].                                             
 A demo implementation of gcForest library as well as some demo client scripts to demostrate how to use the code.  
@@ -16,7 +18,8 @@ Reference: [1] Z.-H. Zhou and J. Feng. Deep Forest: Towards an Alternative to De
 Requirements: This package is developed with Python 2.7, please make sure all the dependencies are installed,     
 which is specified in requirements.txt                                                                            
 
-ATTN: This package was developed and maintained by Mr.Ji Feng(http://lamda.nju.edu.cn/fengj/) .For any problem concerning the codes, please feel free to contact Mr.Feng.（fengj@lamda.nju.edu.cn)  or open some issues here.
+ATTN: This package was developed and maintained by Mr.Ji Feng(http://lamda.nju.edu.cn/fengj/) .
+For any problem concerning the codes, please feel free to contact Mr.Feng.（fengj@lamda.nju.edu.cn)  or open some issues here.
 
 
 News For the Next Version ( Version 1.1)
@@ -72,7 +75,8 @@ tools/train_fg.py
 * --model: str
     - The config filepath for Fine grained models (in json format)
 * --save_outputs: bool
-    - if True. The output predictions produced by Fine Grained Model will be saved in model_cache_dir which is specified in  Model Config. This output will be used when Training Cascade Layer.
+    - if True. The output predictions produced by Fine Grained Model will be saved in model_cache_dir
+      which is specified in  Model Config. This output will be used when Training Cascade Layer.
     - the default value is false
 
 tools/train_cascade.py

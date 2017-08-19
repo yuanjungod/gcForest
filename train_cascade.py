@@ -41,6 +41,7 @@ if __name__ == '__main__':
     cascade = CascadeClassifier(config["cascade"])
     # print(len(data_train.X))
     # exit()
+    LOGGER.info(str(data_train.X.shape)+str(data_train.y.shape))
     opt_layer_id, X_train, y_train, X_test, y_test = cascade.fit_transform(data_train.X, data_train.y, data_test.X, data_test.y)
 
     import IPython; IPython.embed()

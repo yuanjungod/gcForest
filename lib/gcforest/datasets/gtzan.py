@@ -11,9 +11,9 @@ import os, os.path as osp
 import sys
 from .ds_base import ds_base, get_dataset_base, get_dataset_cache_base
 
-DEFAULT_DATA_BASE = osp.abspath( osp.join(get_dataset_base(),'gtzan','genres') )
-DEFAULT_IMAGEST_BASE = osp.abspath( osp.join(get_dataset_base(),'gtzan','splits') )
-DEFAULT_CACHE_BASE = osp.abspath( osp.join(get_dataset_cache_base(),'gtzan') )
+DEFAULT_DATA_BASE = osp.abspath(osp.join(get_dataset_base(), 'gtzan', 'genres'))
+DEFAULT_IMAGEST_BASE = osp.abspath(osp.join(get_dataset_base(), 'gtzan', 'splits'))
+DEFAULT_CACHE_BASE = osp.abspath(osp.join(get_dataset_cache_base(), 'gtzan'))
 DEFAULT_GENRE_LIST = (
         'blues',
         'classical',
@@ -27,6 +27,7 @@ DEFAULT_GENRE_LIST = (
         'rock',
         )
 
+
 def parse_anno_file(anno_path):
     X = []
     y = []
@@ -37,6 +38,7 @@ def parse_anno_file(anno_path):
             y.append(int(cols[1]))
     y = np.asarray(y, dtype=np.int16)
     return X, y
+
 
 def read_data(anno_path, mode, genre_base=None):
     genre_base = genre_base or DEFAULT_DATA_BASE
@@ -78,16 +80,16 @@ class GTZAN(ds_base):
             from tqdm import trange
             X_new = np.zeros((len(X), 1, 661500, 1))
             for i in trange(len(X)):
-                x,_ = librosa.load(osp.join(DEFAULT_DATA_BASE, X[i]))
+                x, _ = librosa.load(osp.join(DEFAULT_DATA_BASE, X[i]))
                 x_len = min(661500, len(x))
-                X_new[i,:,:x_len,0] = x[:x_len]
+                X_new[i, :, :x_len, 0] = x[:x_len]
         if cache is not None and cache != 'raw':
             X = self.load_cache_X(X, cache)
             if cache == 'mfcc':
                 X_new = np.zeros((len(X), X[0].shape[0], 1280, 1))
                 for i, x in enumerate(X):
                     x_len = min(x.shape[1], 1280)
-                    X_new[i,:,:x_len,0] = x[:,:x_len]
+                    X_new[i, :, :x_len, 0] = x[:, :x_len]
                 X = X_new
 
         # layout_X

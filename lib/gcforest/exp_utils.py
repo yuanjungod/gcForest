@@ -33,7 +33,7 @@ def data_norm(X_train, X_test):
 
 
 def append_origin(X, X_origin):
-    return np.hstack(( X.reshape((X.shape[0]), -1), X_origin.reshape((X_origin.shape[0], -1)) ))
+    return np.hstack((X.reshape((X.shape[0]), -1), X_origin.reshape((X_origin.shape[0], -1))))
 
 
 def prec_ets(n_trees, X_train, y_train, X_test, y_test, random_state=None):
@@ -129,7 +129,7 @@ def plot_forest_all_proba(y_proba_all, y_gt):
     mat = np.zeros((num_tree, N))
     LOGGER.info('mat.shape={}'.format(mat.shape))
     for i in range(num_tree):
-        mat[i,:] = y_proba_all[i][(range(N), y_gt)]
+        mat[i, :] = y_proba_all[i][(range(N), y_gt)]
     pylab.matshow(mat, fignum=False, cmap='Blues', vmin=0, vmax=1.0)
     pylab.grid(False)
     pylab.show()

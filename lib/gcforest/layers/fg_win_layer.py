@@ -92,7 +92,7 @@ class FGWinLayer(BaseLayer):
                     X_win = get_windows(X, self.win_x, self.win_y, self.stride_x, self.stride_y, self.pad_x, self.pad_y)
                     _, nh, nw, _ = X_win.shape
                     X_win = X_win.reshape((X_win.shape[0], -1, X_win.shape[-1]))
-                    y_win = y[:,np.newaxis].repeat(X_win.shape[1], axis=1)
+                    y_win = y[:, np.newaxis].repeat(X_win.shape[1], axis=1)
                     if pi == 0:
                         assert self.n_classes == len(np.unique(y)), \
                                 "n_classes={}, len(unique(y))={}".format(self.n_classes, len(np.unique(y)))
@@ -104,7 +104,7 @@ class FGWinLayer(BaseLayer):
             est = self._init_estimators(ti, train_config.random_state)
             y_probas = est.fit_transform(
                 X_train_win, y_train_win, y_train_win[:, 0], cache_dir=train_config.model_cache_dir,
-                test_sets = test_sets, eval_metrics=self.eval_metrics,
+                test_sets=test_sets, eval_metrics=self.eval_metrics,
                 keep_model_in_mem=train_config.keep_model_in_mem)
 
             for pi, phase in enumerate(phases):

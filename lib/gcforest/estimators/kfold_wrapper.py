@@ -68,6 +68,7 @@ class KFoldWrapper(object):
         """
         if cache_dir is not None:
             cache_dir = osp.join(cache_dir, name2path(self.name))
+        # print "X.shape", X.shape, y.shape
         assert 2 <= len(X.shape) <= 3, "X.shape should be n x k or n x n2 x k"
         assert len(X.shape) == len(y.shape) + 1
         assert X.shape[0] == len(y_stratify)

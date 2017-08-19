@@ -171,8 +171,8 @@ class CascadeClassifier(object):
                 # Stack data that current layer needs in to X_cur
                 look_indexs = look_indexs_cycle[layer_id % len(look_indexs_cycle)]
                 for _i, i in enumerate(look_indexs):
-                    X_cur_train = np.hstack((X_cur_train, X_train[:,group_starts[i]:group_ends[i]]))
-                    X_cur_test = np.hstack((X_cur_test, X_test[:,group_starts[i]:group_ends[i]]))
+                    X_cur_train = np.hstack((X_cur_train, X_train[:, group_starts[i]:group_ends[i]]))
+                    X_cur_test = np.hstack((X_cur_test, X_test[:, group_starts[i]:group_ends[i]]))
                 LOGGER.info("[layer={}] look_indexs={}, X_cur_train.shape={}, X_cur_test.shape={}".format(
                     layer_id, look_indexs, X_cur_train.shape, X_cur_test.shape))
                 # Fit on X_cur, predict to update X_proba
@@ -212,7 +212,7 @@ class CascadeClassifier(object):
                                 "accuracy_test={:.2f}%".format(
                                  opt_layer_id, train_acc_list[opt_layer_id], test_acc_list[opt_layer_id]))
                     if self.data_save_dir is not None:
-                        self.save_data( opt_layer_id, *opt_datas)
+                        self.save_data(opt_layer_id, *opt_datas)
                     return opt_layer_id, opt_datas[0], opt_datas[1], opt_datas[2], opt_datas[3]
                 # save opt data if needed
                 if self.data_save_rounds > 0 and (layer_id + 1) % self.data_save_rounds == 0:
